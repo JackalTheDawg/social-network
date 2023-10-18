@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% block left_side %}
+        <div class="chat-list">
+            {% if members != None %}
+                {% for chat in chats %}
+                {% for member in members %}
+                   <a href="{% url 'chat' chat.id %}">
+                       <img src="{{MEDIA_URL}} {{member.profile_picture}}" width="60" height="60"> {{ member }} {{member.surname}} </a>
+                {% endfor %}
+                {% endfor %}
+            {% else %}
+                You havent any chats
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+</body>

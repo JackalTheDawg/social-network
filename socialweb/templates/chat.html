@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+<body>
+    {% block left_side %}
+        <div class="chat-frame" id="chat-frame">
+            {% for message in messages%}
+                {% thumbnail message.sender.profile_picture "60x60" crop="center" upscale=True as pic %}
+                <div class="in-chat-flex">
+                    <img src="{{MEDIA_URL}} {{pic.url}}">
+                {% endthumbnail %}
+                    <div class="in-chat-name">{{ message.sender.name}} {{message.sender.surname}}</div>
+                </div>
+                <div class="message"> {{message.message}}
+                <br>
+                    <div class="date">{{message.date}} </div>
+                </div>
+                <hr>
+                <br>
+            {% endfor %}
+        </div>
+        <div class="message-form">
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" id="chat-message-submit"> Send message </button>
+            </form>
+        </div>
+    </div>
+
+{{ chat|json_script:"json-chat_id" }}
+{{ request.user.id|json_script:"json-user"}}
+
+    <script>
+        const roomName = JSON.parse(document.getElementById('json-chat_id').textContent);
+        const userName = JSON.parse(document.getElementById('json-user').textContent);
+
+        let chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + roomName
+        + '/'
+        );
+
+
+
+        chatSocket.onopen = function() {
+          console.log("Соединение установлено.");
+        };
+
+        chatSocket.onerror = function(error) {
+          alert(`[error]`);
+        };
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+
+        if (data.message) {
+            document.querySelector('#chat-frame').innerHTML += ('<b>' + data.username + '</b>: ' + data.message + '<br>');
+        } else {
+            alert('The message was empty!')
+        }
+
+        scrollToBottom();
+    };
+
+    document.querySelector('#id_message').focus();
+    document.querySelector('#id_message').onkeyup = function(e) {
+        if (e.keyCode === 13) {
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        e.preventDefault()
+
+        const messageInputDom = document.querySelector('#id_message');
+        const message = messageInputDom.value;
+
+        console.log({
+            'message': message,
+            'username': userName,
+            'room': roomName
+        })
+
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': userName,
+            'room': roomName
+        }));
+
+        messageInputDom.value = '';
+
+        return false
+    };
+
+    /**
+    * A function for finding the messages element, and scroll to the bottom of it.
+    */
+    function scrollToBottom() {
+        let objDiv = document.getElementById("chat-messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+
+    </script>
+{% endblock %}
+</body>

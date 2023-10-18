@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+<body>
+    {% block left_side %}
+        <div class="content-container">
+            <div class="content">
+                {% if photos.exists %}
+                    {% for photo in photos %}
+                        {% thumbnail photo.img "180x240" crop="center" upscale=True as pic %}
+                            <form action="#open-full-photo">
+                                <button name="q" value="{{pic.url}}={{photo.id}}"> <img src="{{ MEDIA_URL }} {{ pic.url }}"> </button>
+                            </form>
+                        {% endthumbnail %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        <div class="modal" id="open-full-photo">
+            <div class="photo-container">
+                {% thumbnail picture.img "180x240" crop="center" upscale=True as pic %}
+                <img src="{{MEDIA_URL}} {{pic.url}}">
+                <a href="#close" title="Close" class="close"> x </a>
+                {% endthumbnail %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

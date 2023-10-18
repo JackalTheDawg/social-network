@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+{% load static %}
+{% load thumbnail %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static '/css/style.css' %}" type="text/css" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+    <div class="page-container">
+        <div class="logo-panel">
+            <div class="logo-pic">
+                Socialweb Logo
+            </div>
+            <div class="left-side"></div>
+        </div>
+        <div class="page-grid">
+            <div class="page-info-grid">
+                <div class="panel">
+                    <div class="panel-border">
+                        <div class="panel-frame">
+                            <a href="{% url 'session' %}"><button> My page </button></a>
+                            <a href="{% url 'friends' %}"><button> Friends
+                                {% if invites is not None %}
+                                    #New
+                                {% endif %}
+                                  </button></a>
+                            <a href="news"> <button> News </button> </a>
+                            <a href="favorites"> <button> Favorites </button> </a>
+                            <a href="gallery={{request.user.id}}"> <button> My photos </button> </a>
+                            <a href="video-gallery={{request.user.id}}"> <button> My videos </button> </a>
+                            <a href="settings"> <button> Settings </button> </a>
+                            <a href="chat-list={{request.user.id}}"> <button> Messages </button> </a>
+                            <hr>
+                            <style>
+                                hr {
+                                width: 100%;
+                                color: white;
+                                }
+                            </style>
+                            <form class="" action="{% url 'exit' %}">
+                            <button>Log out</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-picture">
+                    <div class="profile-picture-frame">
+                        {% thumbnail page.profile_picture "240x300" crop="center" upscale=True as pic %}
+                             <img src="{{MEDIA_URL}} {{pic.url}}">
+                        {% endthumbnail %}
+                        {% if page.id == request.user.id %}
+                        <form action="#change-photo">
+                            <a> <button> Change pic </button> </a>
+                        </form>
+                        {% else %}
+                        <div class="interactive-page">
+                            <form>
+                                <button name="add-friend"> add friend </button>
+                            </form>
+                            <form method="post">
+                                {% csrf_token %}
+                                <button name="send-message">Send message</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="information">
+                    <div class="info-frame">
+                        <div class="name">{{page.name}} {{page.surname}}</div>
+                        <div class="data">{{page.birthday}} {{ page.birthday_month }} {{page.birthday_year}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-block">
+                <div class="videos">
+                    <div class="text-line">
+                        {% if request.user.id == page.id %}
+                        <a href="video-gallery={{page.id}}"> <button> all videos </button> </a>
+                        {% endif %}
+                    </div>
+                    <div class="video-gallery-frame">
+                        {% if videos.exists %}
+                            {% for video in videos %}
+                            <form action="#video">
+                                <button name="v" value="{{video.url}}={{video.id}}">
+                                    <video preload="metadata" poster="{{video.file.url}}" width="240" height="200">
+                                        <source src="{{MEDIA_URL}} {{video.file.url}}" type="video/mp4">
+                                    </video>  {{video.title}}
+                                </button>
+                            </form>
+                            {% endfor %}
+                        {% else %}
+                            No video
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="photos">
+                    <div class="text-line">
+                        {% if page.id == request.user.id %}
+                        <form action="#add-photo">
+                            <button> add photo </button>
+                        </form>
+                        {% endif %}
+                        Gallery
+                        <a href="/gallery={{page.id}}"> <button> all photos </button></a>
+                    </div>
+                    <div class="photo-frame">
+                        {% if photos.exists %}
+                            {% for photo in photos %}
+                                {% thumbnail photo.img "180x240" crop="center" upscale=True as pic %}
+                                <form action="#open-full-photo" method="get">
+                                    <button name="q" value="{{pic.url}}={{photo.id}}" class="full-photo" type="submit"> <img src="{{MEDIA_URL}} {{pic.url}}"> </button>
+                                </form>
+                                {% endthumbnail %}
+                            {% endfor %}
+                        {% else %}
+                            No photo
+                        {% endif %}
+                    </div>
+                    <hr>
+                </div>
+                <div class="blog">
+                    <div class="blog-frame">
+                        <div class="new-post">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="add-post"> {{ blog_form }} </div>
+                                <button type="submit" name="blog"> Post </button>
+                            </form>
+                        </div>
+                        <div class="posts">
+                                {% if posts.exists %}
+                                    {% for post in posts %}
+                                        {% thumbnail post.post_author.profile_picture "60x60" crop="center" upscale=True as prof_pic %}
+                                        <div class="single-post">
+                                            <div class="profile-in-blog">
+                                            <img src="{{MEDIA_URL}} {{prof_pic.url}}">
+                                                {{post.post_author.name}} {{post.post_author.surname }}: <br>
+                                            </div>
+                                            <div class="post-text">{{ post.post_text }}</div>
+                                            {% if post.post_content != None %}
+                                            {% thumbnail post.post_content "480x360" crop="center" upscale=True as pic %}
+                                            <div class="post-content"><img src="{{MEDIA_URL}} {{pic.url}}"></div>
+                                            {% endthumbnail %}
+                                            {% endif %}
+                                            <div class="date">{{ post.date }} </div>
+                                            </div>
+                                            <br>
+                                        {% endthumbnail %}
+                                        {% for comment in comments %}
+                                            {% if comment.post.id == post.id %}
+                                                <div class="commentary">
+                                                    <div class="commentary-flex">
+                                                        {% thumbnail comment.author.profile_picture "40x40" crop="center" upscale=True as pic %}
+                                                        <img src="{{MEDIA_URL}} {{pic.url}}">
+                                                        {% endthumbnail %}
+                                                        <div class="commentary-name"> {{comment.author.name}} {{comment.author.surname}} </div>
+                                                    </div>
+                                                    {{comment.text}}
+                                                    {{comment.content}}
+                                                    {{comment.date}}
+                                                </div>
+                                                <br>
+                                                <hr>
+                                                <br>
+                                            {% endif %}
+                                        {% endfor %}
+                            <div class="comments" id="{{post.id}}">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ comment_form }}
+                                    <button name="comment" value="{{post.id}}"> comment </button>
+                                </form>
+                            </div>
+                            <div class="add-comment">
+                                <button onclick="myFunction({{post.id}})">
+                                add comment </button>
+                            </div>
+                            <form method="post" class="like">
+                                {% csrf_token %}
+                                <button name="like" value="{{ post.id }}">
+                                    {% for id, like in likes.items %}
+                                    {% if id == post.id %}
+                                    {{ like }} likes
+                                    {% endif %}
+                                    {% endfor %}
+                                </button>
+                            </form>
+                                    {% endfor %}
+                                {% else %}
+                                It`s empty right now. Be the first!
+                                {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="add-photo">
+            <div class="add-at-gallery">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ add_photo }}
+                    <button name="add-photo" type="submit"> post </button>
+                </form>
+                <a href="#close" title="Close" class="close"> x </a>
+            </div>
+        </div>
+        <div class="modal" id="open-full-photo">
+            <div class="photo-container">
+                {% thumbnail picture.img "200x240" crop="center" upscale=True as pic %}
+                <img src="{{MEDIA_URL}} {{pic.url}}">
+                <a href="#close" title="Close" class="close"> x </a>
+                {% endthumbnail %}
+            </div>
+        </div>
+        <div class="modal" id="video">
+            <div class="video-container">
+                <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+                {{video_render.title}}
+                <video controls>
+                    <source src="{{MEDIA_URL}} {{video_render.file.url}}" type="video/mp4">
+                </video>
+                <a href="#close" title="Close" class="close close-video"> x </a>
+            </div>
+        </div>
+        <div class="modal" id="change-photo">
+            <div class="change-photo">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ change_pic }}
+                    <button name="change-picture" type="submit"> post </button>
+                </form>
+                <a href="#close" title="Close" class="close"> x </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function myFunction(postId) {
+          post = document.getElementById(postId)
+          post.style = "display: block"
+        }
+    </script>
+</body>
+<footer></footer>
+</html>

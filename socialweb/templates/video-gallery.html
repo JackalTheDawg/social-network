@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+<body>
+    {% block left_side %}
+    <div class="video-content-container">
+        <div class="search-form">
+            <form class="search" method="get">
+                <input type="text" name="q" placeholder="Enter the video title">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+                <div class="modal" id="add-video-form">
+                    <form method="post" class="add-video" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button type="submit">post video</button>
+                        <a href="#close" title="Close" class="close close-video"> x </a>
+                    </form>
+                </div>
+            <form action="#add-video-form">
+                <button> add video </button>
+            </form>
+            <div class="content">
+                <div class="video-gallery-frame">
+                    {% if videos.exists %}
+                        {% for video in videos %}
+                            <form action="#video">
+                                <button name="v" value="{{video.url}}={{video.id}}">
+                                    <video preload="metadata" poster="{{video.file.url}}" width="200" height="180">
+                                        <source src="{{MEDIA_URL}} {{video.file.url}}" type="video/mp4">
+                                    </video> {{video.title}}
+                                </button>
+                            </form>
+                        {% endfor %}
+                    {% else %}
+                        No video
+                    {% endif %}
+                </div>
+            </div>
+        <div class="modal" id="video">
+            <div class="video-container">
+                <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+                {{video_render.title}}
+                <video controls>
+                    <source src="{{MEDIA_URL}} {{video_render.file.url}}" type="video/mp4">
+                </video>
+                <a href="#close" title="Close" class="close close-video"> x </a>
+            </div>
+        </div>
+        <div class="results">
+            {% for result in results %}
+                    {% if result is not None %}
+                        <form action="#video">
+                            <button name="v" value="{{result.url}}={{result.id}}">
+                                <video preload="metadata" poster="{{result.file.url}}" width="200" height="180">
+                                    <source src="{{MEDIA_URL}} {{result.file.url}}" type="video/mp4">
+                                </video> {{video.title}}
+                            </button>
+                        </form>
+                    {% else %}
+                        Not found
+                    {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

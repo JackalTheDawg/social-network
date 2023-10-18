@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+{% load thumbnail %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static '/css/style.css' %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="logo-panel">
+            <div class="logo-pic">
+                Socialweb Logo
+            </div>
+            <div class="left-side"></div>
+        </div>
+        <div class="page-grid">
+            <div class="page-info-grid">
+                <div class="panel">
+                    <div class="panel-border">
+                        <div class="panel-frame">
+                            <a href="{% url 'session' %}"><button> My page </button></a>
+                            <a href="{% url 'friends' %}"><button> Friends
+                                {% if invites is not None %}
+                                    #New
+                                {% endif %}
+                                  </button></a>
+                            <a href="news"> <button> News </button> </a>
+                            <a href="favorites"> <button> Favorites </button> </a>
+                            <a href="gallery={{request.user.id}}"> <button> My photos </button> </a>
+                            <a href="video-gallery={{request.user.id}}"> <button> My videos </button> </a>
+                            <a href="settings"> <button> Settings </button> </a>
+                            <a href="chat-list={{request.user.id}}"> <button> Messages </button> </a>
+                            <hr>
+                            <style>
+                                hr {
+                                width: 100%;
+                                color: white;
+                                }
+                            </style>
+                            <form class="" action="{% url 'exit' %}">
+                            <button>Log out</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% block left_side %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

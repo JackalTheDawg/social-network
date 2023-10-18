@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  django:
+    build: .
+    container_name: socialweb
+    command: bash -c "
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+      - .:/usr/src/app
+
+    network_mode: host
+    depends_on:
+      - pgdb
+
+  pgdb:
+    restart: always
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+    container_name: pgdb
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
+
+volumes:
+  pgdbdata: null
+

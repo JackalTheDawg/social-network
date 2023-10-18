@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+<body>
+    {% block left_side %}
+    <div class="search-container">
+        <div class="search-form">
+            <form class="search" method="get">
+                <input type="text" name="q" placeholder="Search your friends">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="" id="">
+            <div class="all_users">
+                {% for user in users %}
+                    {% thumbnail user.profile_picture "60x60" crop="center" upscale=True as im %}
+                        <div class="">
+                            <a href="/id={{user.id}}">
+                                <img src="{{MEDIA_URL}} {{im.url}}"> {{user.name}} {{user.surname}}
+                            </a>
+                            <hr>
+                        </div>
+                    {% endthumbnail %}
+                {% endfor %}
+                <a href="#close" title="Close" class="close"> x </a>
+            </div>
+        </div>
+        <div class="results">
+            {% for result in results %}
+                {% thumbnail result.profile_picture "60x60" crop="center" upscale=True as im %}
+                    {% if result is not None %}
+                        <a href="/id={{result.id}}">
+                            <img src="{{MEDIA_URL}} {{im.url}}"> {{ result.name }} {{ result.surname }}
+                        </a>
+                    {% else %}
+                        Not found
+                    {% endif %}
+                {% endthumbnail %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

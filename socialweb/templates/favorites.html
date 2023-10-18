@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+<body>
+    {% block left_side %}
+    {% if likes.exists %}
+        {% for like in likes %}
+            {% thumbnail like.who_likes.profile_picture "60x60" crop="center" upscale=True as prof_pic %}
+            <img src="{{MEDIA_URL}} {{prof_pic}}"> {{like.who_likes.name }} {{like.who_likes.surname}}
+            {{like.post.post_text}}
+            {% endthumbnail %}
+        {% endfor %}
+    {% else %}
+        You havent any liked posts
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

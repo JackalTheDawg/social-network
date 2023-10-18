@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+<body>
+    {% block left_side %}
+    <div class="settings">
+        <form class="form-border" method="post">
+         {% csrf_token %}
+            <div class="form"> {{ form }}
+                <button> Save changes </button>
+            </div>
+        </form>
+    </div>
+    {% endblock %}
+</body>

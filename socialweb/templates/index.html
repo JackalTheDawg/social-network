@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static '/css/style.css' %}" type="text/css" rel="stylesheet">
+    <title>Sign in or sign up</title>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-block">
+            <div class="logo">
+                Logo
+            </div>
+            <div class="tagline">
+                Some tagline
+            </div>
+        </div>
+        <div class="sign-in-block">
+            <div class="sign-in">
+                <form method="post" class="sign-in-form">
+                    {% csrf_token %}
+                    {{ sign_in }}
+                    <button class="sign-in-btn" type="submit" name="sign-in-btn"> Sign in </button>
+                    {% if message != None%}
+                    <script> alert("{{message}}") </script>
+                    {% endif %}
+                </form>
+                <a class="forgot-password"> Forgot password? </a>
+                <form action="#new-account" class="sign-up-form">
+                    <button class="sign-up-btn"> Sign up </button>
+                </form>
+            </div>
+        </div>
+        <div class="modal" id="new-account">
+            <div class="create-account">
+                <div class="grid-container">
+                    <p> Create your account, it`s simply
+                    <br>
+                    Enter the next information about you:</p> <br>
+                    <form class="registration-form" method="post">
+                        {% csrf_token %}
+                        <div class="date-text">
+                            Date of birthday:
+                        </div>
+                        {{ registration }}
+                        <button type="submit" name="registration-btn"> Registration </button>
+                        {% if message != None %}
+                        <script> alert("{{message}}") </script>
+                        {% endif %}
+                    </form>
+                </div>
+                <a href="#close" title="Close" class="close"> x </a>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <div class="container">
+        <hr>
+        <div class="lan">
+            rus eng etc
+        </div>
+        <div class="info>">
+            about company etc
+        </div>
+    </div>
+
+</footer>
+</html>

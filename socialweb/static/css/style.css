@@ -1,0 +1,864 @@
+/*index page block */
+
+html {
+    padding: 0;
+    margin: 0;
+    bottom: 0;
+    border: 0;
+    font-family: 'Luciada Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Veranda, sans-serif;
+    height: 100vh;
+}
+
+body {
+    width: 100vw;
+    height: 80vh;
+}
+
+.container {
+    position: relative;
+    width: 94%;
+    height: 90%;
+    left:3%;
+    background-color: #f0f3f6;
+    display : flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.logo-block {
+    position: relative;
+}
+
+.logo{
+    color: #0099FF;
+    font-weight: bolder;
+    font-size: 80px;
+}
+
+.tagline{
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+.sign-in-block {
+    position: relative;
+    border: 1px solid #c6c7d6;
+    background-color: #f7f8fe;
+    border-radius:1em;
+    min-height: 400px;
+    min-width: 300px;
+}
+
+.sign-in{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    left: 10%;
+    padding: 10px;
+    min-height: 300px;
+}
+
+.sign-in-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 180px;
+}
+
+.formOne {
+    position: relative;
+    width: 90%;
+    border-radius: 1em;
+    padding: 4px 6px;
+    border: 1px solid #c6c7d6;
+    outline-color: green;
+}
+
+.sign-up-form {
+    display: flex;
+    justify-content: space-around;
+    min-width: 90%;
+    position: relative;
+}
+
+.sign-in-btn {
+    border: none;
+    background-color: #039bff;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    height: 30px;
+    font-size: 14px;
+    width: 70%;
+    position: relative;
+    left: 15%;
+    border-radius: 1em;
+}
+
+.sign-up-btn {
+    background-color: #22b904;
+    width: 70%;
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    border-radius: 1em;
+    border: none;
+    cursor: pointer;
+    height: 30px;
+}
+
+input:focus {
+    outline-color: #8ecdff;
+}
+
+a, a:visited{
+    color: dodgerblue;
+    cursor:pointer;
+}
+
+.modal {
+    top: 0%;
+    left: 0%;
+    position: fixed;
+    width: 1000vw;
+    height: 1000vh;
+    background-color: rgba(0,0,0,0.8);
+    visibility: hidden;
+    z-index: 1;
+    opacity: 0;
+}
+
+.modal:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+.create-account{
+    background-color: #f7f8fe;
+    position: fixed;
+    min-width: 30%;
+    min-height: 60%;
+    text-align: center;
+    border-radius: 10px;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #b6e2ff;
+    left: 35%;
+    top: 10%;
+    z-index: 2;
+    max-width:600px;
+}
+
+.create-account p {
+    color:#5aabbd;
+}
+
+.create-account:target{
+    display: block;
+}
+
+.close{
+    position:absolute;
+    right:1%;
+    top:0%;
+    float: right;
+    font-size: 24px;
+    font-weight: 800;
+    line-height:1;
+    color: red;
+    text-shadow: 0 1px 0 #000;
+    opacity: 5;
+    text-decoration: none;
+}
+
+.close:focus, .close:hover{
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .75;
+}
+
+.grid-container{
+    position: relative;
+    width: 80%;
+    height: 90%;
+    left: 10%;
+}
+
+.grid-container text{
+    color:black;
+}
+
+.registration-form {
+    display: grid;
+    column-gap: 20px;
+    row-gap: 20px;
+    grid-auto-rows: minmax(100px; auto);
+    grid-template-columns: repeat(3, 30%);
+    padding-top: 20px;
+}
+
+.registration-form input{
+    border-radius: 30px;
+    padding:5px;
+    border:1px solid #c6c7d6;
+}
+
+#id_email {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+
+}
+#id_phone_number {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+
+}
+#id_name {
+    grid-column: 1;
+    grid-row:2;
+    justify-self: start;
+}
+#id_surname{
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: end;
+}
+
+#id_password {
+    position: relative;
+    grid-row: 3;
+    grid-column: 1/4;
+}
+.registration_password_field{
+    text-align: center;
+}
+
+.date-text {
+    grid-row:4;
+    grid-column: 1/2;
+    font-size: 10px;
+    color: #5aabbd;
+}
+
+#id_birthday{
+    grid-column: 1;
+    grid-row: 5;
+}
+#id_birthday_month{
+    grid-column: 2;
+    grid-row: 5;
+}
+#id_birthday_year{
+    grid-column: 3;
+    grid-row: 5;
+}
+
+#id_sex {
+    grid-row: 6;
+    display: flex;
+    justify-content: space-around;
+    grid-column: 1/4;
+}
+
+#id_profile_picture{
+    grid-row: 6;
+    grid-column: 3;
+}
+
+.registration-form button{
+    grid-row: 7;
+    grid-column:2;
+    background-color: #3aae52;
+    font-size:16px;
+    border:none;
+    color: white;
+    border-radius:30px;
+    cursor: pointer;
+    height: 40px;
+}
+
+footer{
+    height: 20vh;
+    color: #a69f9f;
+}
+
+footer .container{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-item: flex-start;
+}
+
+footer .container hr{
+    width: 99%;
+    color: #a69f9f;
+    height: 1px;
+}
+
+.lan {
+    font-size: 18px;
+}
+
+.info{
+    font-size: 12px;
+}
+
+.errorlist {
+    color: red;
+    font-size: 10px;
+}
+
+/* page block */
+
+img:hover{
+    cursor: pointer;
+}
+
+.page-container {
+    position: relative;
+    width: 97%;
+    left:1%;
+}
+
+.logo-panel {
+    width: 100%;
+    height: 70px;
+    background-color: dodgerblue;
+    border-radius: 20px;
+}
+
+.logo-pic {
+    position: relative;
+    color: white;
+    font-size: 36px;
+    padding: 5px;
+    left: 1%;
+    top:10%;
+}
+
+.page-grid {
+    display: grid;
+    grid-template-areas:
+    "info info info"
+    "content content content";
+    grid-template-columns: 1fr 3fr 9fr;
+    grid-template-rows: 2fr 5fr;
+}
+
+.page-info-grid {
+    grid-area: info;
+    display: grid;
+    grid-template-areas:
+    "panel profile-picture information";
+    grid-template-columns: 1fr 3fr 9fr;
+    max-height: 500px;
+    width: 98%;
+    position:relative;
+    left:1%;
+}
+
+
+.panel {
+    grid-area: panel;
+}
+
+.panel-border {
+    position: relative;
+    width: 80%;
+    height: 50%;
+    border: 1px solid #ccc;
+    top: 3%;
+    left:2%;
+    min-height: 250px;
+}
+
+.panel-frame {
+    position: relative;
+    left:10%;
+    width: 80%;
+    top: 4%;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-frame button {
+    color: #424141;
+    border: None;
+    background-color: #f5f5f5;
+}
+
+.panel-frame button:hover{
+    border: 1px solid #999898;
+    cursor: pointer;
+}
+
+.profile-picture {
+    grid-area: profile-picture;
+}
+
+.profile-picture-frame {
+    position: relative;
+    height: 80%;
+    width:80%;
+    left: 3%;
+    top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.profile-picture-frame img{
+    cursor: default;
+    border-radius: 3px;
+}
+
+.profile-picture-frame button{
+    color:  #424141;
+    border: 1px solid #f5f5f5;
+    border-radius: 60px;
+    cursor: pointer;
+    height: 30px;
+    min-width: 120px;
+}
+
+.profile-picture-frame button:hover {
+    border: 1px solid #999898;
+}
+
+.interactive-page {
+    display: flex;
+}
+
+.information{
+    grid-area: information;
+}
+
+/* Если информации будет много, придется перекидать на гриды */
+.info-frame {
+    position: relative;
+    width: 70%;
+    left: 10%;
+    height: 90%;
+    top: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.name {
+    font-weight: bolder;
+    font-size: 30px;
+    color: black;
+}
+
+.content-block {
+    position: relative;
+    grid-area: content;
+    display: grid;
+    grid-template-areas:
+    "video photo"
+    "video blog";
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: 1fr 5fr;
+
+    width:96%;
+    left:2%;
+}
+
+.videos {
+    grid-area: video;
+    border: 1px solid #bfbfbf;
+}
+
+.video-gallery-frame {
+    position: relative;
+    width: 90%;
+    left: 5%;
+    height: 90%;
+    top: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    max-height: 600px;
+}
+
+.video-gallery-frame button {
+    border: None;
+    background-color: white;
+    cursor: pointer;
+}
+
+.photos {
+    grid-area: photo;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-line {
+    background-color: #a5d4f0;
+    width: 100%;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    min-height: 40px;
+    align-items: center;
+}
+
+.text-line button {
+    border: None;
+    cursor: pointer;
+    background-color: #dfebec;
+    font-weight: bolder;
+    border-radius: 40px;
+    color: #2f2222;
+}
+
+.photo-frame {
+    position: relative;
+    width: 90%;
+    left: 5%;
+    display: flex;
+    justify-content: space-around;
+    top: 2%;
+    min-height: 100px;
+}
+
+.blog {
+    grid-area: blog;
+}
+
+.blog-frame {
+    position: relative;
+    width: 90%;
+    left: 5%;
+    top: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.new-post {
+    width: 100%;
+    background-color: #f9f9f9;
+    border: 1px solid #d7d6d6;
+}
+
+.add-post {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    position: relative;
+    left: 35%;
+
+}
+
+.posts {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 90%;
+
+}
+
+.single-post {
+    position: relative;
+    left: 10%;
+    width: 80%;
+    font-size: 18px;
+    padding: 5px;
+    display: grid;
+    grid-template-areas:
+    "profile"
+    "text"
+    "photo"
+    "date";
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr 7fr;
+    max-height: 530px;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.profile-in-blog img{
+    border-radius: 60px;
+    grid-area: profile-picture;
+}
+
+.profile-in-blog {
+    font-weight: bolder;
+    color: #2d82b5;
+    grid-area: profile;
+}
+
+.post-text {
+    grid-area: text;
+    grid-column-start: 2;
+}
+
+.post-content {
+    grid-area: photo;
+    grid-column-start: 2;
+}
+
+.date {
+    grid-area: date;
+    grid-column-start: 4;
+}
+
+.comments {
+    display: none;
+}
+
+.add-comment {
+    max-width:100px;
+}
+
+
+.commentary {
+    position: relative;
+    font-size:14px;
+    background-color: #ddddf0;
+    left:2%;
+    width:90%;
+}
+
+.commentary-flex {
+    display: flex;
+    align-items: center;
+}
+
+.commentary img {
+    border-radius: 30px;
+}
+
+.commentary-name {
+    font-weight: bolder;
+}
+
+
+.add-at-gallery{
+    background-color: #f7f8fe;
+    position: fixed;
+    min-width: 30%;
+    min-height: 60%;
+    text-align: center;
+    border-radius: 10px;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #b6e2ff;
+    left: 35%;
+    top: 10%;
+    z-index: 2;
+    max-width:600px;
+}
+
+.photo-container{
+    background-color: #f7f8fe;
+    position: fixed;
+    min-width: 30%;
+    min-height: 60%;
+    text-align: center;
+    border-radius: 10px;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #b6e2ff;
+    left: 35%;
+    top: 10%;
+    z-index: 2;
+    max-width:600px;
+}
+
+.full-photo {
+    border: None;
+    background-color: white;
+}
+
+.video-container {
+    background-color: #f7f8fe;
+    position: fixed;
+    min-width: 50%;
+    max-width: 70%;
+    min-height: 60%;
+    text-align: center;
+    border-radius: 10px;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #b6e2ff;
+    left: 25%;
+    top: 10%;
+    z-index: 2;
+}
+
+.add-video-form {
+    background-color: #f7f8fe;
+    position: fixed;
+    min-width: 30%;
+    min-height: 60%;
+    text-align: center;
+    border-radius: 10px;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #b6e2ff;
+    left: 35%;
+    top: 10%;
+    z-index: 2;
+}
+
+/*friend_list*/
+
+
+.invites {
+    background-color: #f7f8fe;
+    position: fixed;
+    min-width: 30%;
+    min-height: 60%;
+    text-align: center;
+    border-radius: 10px;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #b6e2ff;
+    left: 35%;
+    top: 10%;
+    z-index: 2;
+}
+
+
+.change-photo {
+    background-color: #f7f8fe;
+    position: fixed;
+    min-width: 30%;
+    min-height: 60%;
+    text-align: center;
+    border-radius: 10px;
+    color: #373737;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #b6e2ff;
+    left: 35%;
+    top: 10%;
+    z-index: 2;
+}
+
+/* photo-gallery page */
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.content button {
+    border: None;
+    background-color: white;
+}
+
+.content-container {
+    grid-area: information;
+    width: 100%;
+    height: 100%;
+}
+
+/* video-gallery page */
+
+.video-content-container {
+    grid-area: information;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* settings page */
+.settings {
+    grid-area: information;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f5f5f5;
+    width: 80%;
+    height: 100%;
+    position: relative;
+    min-height: 700px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.form-border {
+    width: 80%;
+    height: 100%;
+}
+
+
+/* chat page */
+.chat-list {
+    grid-area: information;
+    background-color: #f7f7f7;
+}
+
+.chat-frame {
+    grid-area: information;
+}
+
+.chat-frame img {
+    border-radius: 30px;
+}
+
+.in-chat-name {
+    font-weight: bolder;
+    color: blue;
+    position: relative;
+    left: 1%;
+}
+
+.in-chat-flex {
+    display:flex;
+    align-items: center;
+}
+
+.message{
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    width: 80%;
+    position: relative;
+    left: 10%;
+}
+
+.date {
+    font-size: 14px;
+    position: relative;
+    left: 10%;
+}

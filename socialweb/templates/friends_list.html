@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+<body>
+    {% block left_side %}
+    <div class="search-conteiner">
+        <div class="search-form">
+            <form class="search" method="get">
+                <input type="text" name="q" placeholder="Search your friends">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="friends" id="friends">
+            {% if friends is not None %}
+                {% for friend in friends %}
+                    {% thumbnail friend.profile_picture "60x60" crop="center" upscale=True as im %}
+                        <div class="">
+                            <a href="/id={{friend.id}}">
+                                <img src="{{MEDIA_URL}} {{im.url}}"> {{friend.name}} {{friend.surname}}
+                            </a>
+                            <hr>
+                    {% endthumbnail %}
+                        </div>
+                {% endfor %}
+            {% else %}
+            No friends
+            {% endif %}
+        </div>
+        <form action="#invites">
+            <button>invites</button>
+        </form>
+        <div class="modal" id="invites">
+            <div class="invites">
+                {% if invites.exists %}
+                    {% for invite in invites %}
+                        {% thumbnail invite.profile_picture "60x60" crop="center" upscale=True as im %}
+                            <div class="">
+                                <a href="/id={{invite.id}}">
+                                    <img src="{{MEDIA_URL}} {{im.url}}"> {{invite.name}} {{invite.surname}}
+                                </a>
+                                <form>
+                                    <button name="accept" value="{{invite.sender}}"> add friend </button>
+                                </form>
+                               <form>
+                                   <button name="refuse" value="{{invite}}"> refuse </button>
+                               </form>
+                                <hr>
+                        {% endthumbnail %}
+                            </div>
+                    {% endfor %}
+                {% else %}
+                    No invites here
+                {% endif %}
+                <a href="#close" title="Close" class="close"> x </a>
+            </div>
+        </div>
+        <a href="{% url 'search' %}"><button>search</button></a>
+                <div class="results">
+            {% for result in results %}
+                {% thumbnail result.profile_picture "60x60" crop="center" upscale=True as im %}
+                    {% if result is not None %}
+                        <a href="/id={{result.id}}">
+                            <img src="{{MEDIA_URL}} {{im.url}}"> {{ result.name }} {{ result.surname }}
+                        </a>
+                    {% else %}
+                        Not found
+                    {% endif %}
+                {% endthumbnail %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
