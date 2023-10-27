@@ -97,14 +97,4 @@ class FriendList:
             else:
                 return None
 
-class News:
-    user = None
-    friends = FriendsList.objects.filter(friends_list__in=[34])
-    obj_list = []
 
-    """Abstractive function"""
-    def func(self):
-        for n in self.friends.all().exclude(34):
-            photo = PhotoGallery.objects.filter(page=n.pk)
-            video = Videos.objects.filter(page=n.pk)
-            post = BlogModel.objects.filter(post_location_id=n.pk)

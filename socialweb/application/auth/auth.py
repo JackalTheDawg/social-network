@@ -26,7 +26,7 @@ class AuthenticateUser:
             else:
                 return None
         except CustomUser.DoesNotExist:
-            return HttpResponse('Account doesnt exist. Check up email or password')
+            return None
 
     def sign_up(self, request, registration_data):
         try:
